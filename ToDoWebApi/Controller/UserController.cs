@@ -1,5 +1,7 @@
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUsers;
 using ToDoWebApi.DbOperations;
 
@@ -21,7 +23,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetCustomers()
+    public IActionResult GetUsers()
     {
         GetUsersQuery query = new GetUsersQuery(_context, _mapper);
         var result = query.Handle();

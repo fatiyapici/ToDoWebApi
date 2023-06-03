@@ -18,7 +18,6 @@ namespace ToDoWebApi.Applications.UserOperations.Queries.GetUsers
         public List<UsersViewModel> Handle()
         {
             var userList = _dbContext.Users
-            .Include(uc => uc.UserCards).ThenInclude(c => c.Card)
             .OrderBy(x => x.Id).ToList();
 
             List<UsersViewModel> um = _mapper.Map<List<UsersViewModel>>(userList);
@@ -32,6 +31,5 @@ namespace ToDoWebApi.Applications.UserOperations.Queries.GetUsers
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public virtual List<string> UserCards { get; set; }
     }
 }
