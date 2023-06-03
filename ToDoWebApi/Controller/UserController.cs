@@ -30,4 +30,68 @@ public class UserController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("{id}")]
+    public IActionResult GetUserDetail(int id)
+    {
+        GetUserDetailQuery query = new GetUserDetailQuery(_context, _mapper);
+        query.UserId = id;
+        GetUserDetailQueryValidator validator = new GetUserDetailQueryValidator();
+        validator.ValidateAndThrow(query);
+        var result = query.Handle();
+        return Ok(result);
+    }
+
+    // [HttpPost("newCustomer")]
+    // public IActionResult AddCustomer([FromBody] CreateCustomerViewModel newCustomer)
+    // {
+    //     CreateCustomerCommand command = new CreateCustomerCommand(_context, _mapper);
+    //     command.Model = newCustomer;
+    //     CreateCustomerCommandValidator validator = new CreateCustomerCommandValidator();
+    //     validator.ValidateAndThrow(command);
+    //     command.Handle();
+    //     return Ok();
+    // }
+
+    // [HttpPut("{id}")]
+    // public IActionResult UpdateCustomer([FromBody] UpdateCustomerViewModel updateCustomer, int id)
+    // {
+    //     UpdateCustomerCommand command = new UpdateCustomerCommand(_context, id);
+    //     command.Id = id;
+    //     command.Model = updateCustomer;
+    //     UpdateCustomerCommandValidator validator = new UpdateCustomerCommandValidator();
+    //     validator.ValidateAndThrow(command);
+    //     command.Handle();
+    //     return Ok();
+    // }
+
+    // [HttpDelete("{id}")]
+    // public IActionResult DeleteCustomer(int id, string email, string password)
+    // {
+    //     DeleteCustomerCommand command = new DeleteCustomerCommand(_context);
+    //     command.Model.Id = id;
+    //     command.Model.Email = email;
+    //     command.Model.Password = password;
+    //     DeleteCustomerCommandValidator validator = new DeleteCustomerCommandValidator();
+    //     validator.ValidateAndThrow(command);
+    //     command.Handle();
+    //     return Ok();
+    // }
+
+    // [HttpPost("connect/token")]
+    // public ActionResult<Token> CreateToken([FromBody] CreateTokenModel login)
+    // {
+    //     CreateTokenCommand command = new CreateTokenCommand(_context, _mapper, _configuration);
+    //     command.Model = login;
+    //     var token = command.Handle();
+    //     return token;
+    // }
+
+    // [HttpGet("refreshToken")]
+    // public ActionResult<Token> RefreshToken([FromQuery] string token)
+    // {
+    //     RefreshTokenCommand command = new RefreshTokenCommand(_context, _configuration);
+    //     command.RefreshToken = token;
+    //     var resultToken = command.Handle();
+    //     return resultToken;
+    // }
 }
