@@ -1,9 +1,11 @@
 using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using ToDoWebApi.Applications.UserOperations.Commands.CreateUser;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUsers;
 using ToDoWebApi.DbOperations;
+using static ToDoWebApi.Applications.UserOperations.Commands.CreateUser.CreateUserCommand;
 
 namespace ToDoWebApi.Controllers;
 
@@ -13,6 +15,7 @@ public class UserController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly IToDoDbContext _context;
+    
     readonly IConfiguration _configuration;
 
     public UserController(IMapper mapper, IToDoDbContext context, IConfiguration configuration)
@@ -41,16 +44,16 @@ public class UserController : ControllerBase
         return Ok(result);
     }
 
-    // [HttpPost("newCustomer")]
-    // public IActionResult AddCustomer([FromBody] CreateCustomerViewModel newCustomer)
-    // {
-    //     CreateCustomerCommand command = new CreateCustomerCommand(_context, _mapper);
-    //     command.Model = newCustomer;
-    //     CreateCustomerCommandValidator validator = new CreateCustomerCommandValidator();
-    //     validator.ValidateAndThrow(command);
-    //     command.Handle();
-    //     return Ok();
-    // }
+    [HttpPost("newUser")]
+    public IActionResult AddUser([FromBody] CreateUserViewModel newUser)
+    {
+        CreateUserCommand command = new CreateUserCommand(_context, _mapper);
+        command.Model = newUser;
+        CreateUserCommandValidator validator = new CreateUserCommandValidator();
+        validator.ValidateAndThrow(command);
+        command.Handle();
+        return Ok();
+    }
 
     // [HttpPut("{id}")]
     // public IActionResult UpdateCustomer([FromBody] UpdateCustomerViewModel updateCustomer, int id)
