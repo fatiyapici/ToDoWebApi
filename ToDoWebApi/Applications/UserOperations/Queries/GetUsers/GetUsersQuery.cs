@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using ToDoWebApi.DbOperations;
 
 namespace ToDoWebApi.Applications.UserOperations.Queries.GetUsers
