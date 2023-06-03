@@ -7,6 +7,7 @@ namespace ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail
     public class GetUserDetailQuery
     {
         public const string ExceptionMessage = "User does not exist.";
+        
         public int UserId { get; set; }
 
         private readonly IToDoDbContext _dbContext;
