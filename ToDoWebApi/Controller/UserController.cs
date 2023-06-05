@@ -3,10 +3,13 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using ToDoWebApi.Applications.UserOperations.Commands.CreateUser;
 using ToDoWebApi.Applications.UserOperations.Commands.DeleteUser;
+using ToDoWebApi.Applications.UserOperations.Commands.UpdateUser;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUsers;
+using ToDoWebApi.Applications.UserOperations.UpdateUser;
 using ToDoWebApi.DbOperations;
 using static ToDoWebApi.Applications.UserOperations.Commands.CreateUser.CreateUserCommand;
+using static ToDoWebApi.Applications.UserOperations.UpdateUser.UpdateUserCommand;
 
 namespace ToDoWebApi.Controllers;
 
@@ -56,17 +59,17 @@ public class UserController : ControllerBase
         return Ok();
     }
 
-    // [HttpPut("{id}")]
-    // public IActionResult UpdateCustomer([FromBody] UpdateCustomerViewModel updateCustomer, int id)
-    // {
-    //     UpdateCustomerCommand command = new UpdateCustomerCommand(_context, id);
-    //     command.Id = id;
-    //     command.Model = updateCustomer;
-    //     UpdateCustomerCommandValidator validator = new UpdateCustomerCommandValidator();
-    //     validator.ValidateAndThrow(command);
-    //     command.Handle();
-    //     return Ok();
-    // }
+    [HttpPut("{id}")]
+    public IActionResult UpdateUser([FromBody] UpdateUserModel updateUser, int id)
+    {
+        UpdateUserCommand command = new UpdateUserCommand(_context, id);
+        command.Id = id;
+        command.Model = updateUser;
+        UpdateUserCommandValidator validator = new UpdateUserCommandValidator();
+        validator.ValidateAndThrow(command);
+        command.Handle();
+        return Ok();
+    }
 
     [HttpDelete("{id}")]
     public IActionResult DeleteUser(int id, string email, string password)
