@@ -9,6 +9,7 @@ using ToDoWebApi.Applications.UserOperations.Queries.GetUsers;
 using ToDoWebApi.Applications.UserOperations.UpdateUser;
 using ToDoWebApi.DbOperations;
 using static ToDoWebApi.Applications.UserOperations.Commands.CreateUser.CreateUserCommand;
+using static ToDoWebApi.Applications.UserOperations.Commands.DeleteUser.DeleteUserCommand;
 using static ToDoWebApi.Applications.UserOperations.UpdateUser.UpdateUserCommand;
 
 namespace ToDoWebApi.Controllers;
@@ -19,7 +20,7 @@ public class UserController : ControllerBase
 {
     private readonly IMapper _mapper;
     private readonly IToDoDbContext _context;
-    
+
     readonly IConfiguration _configuration;
 
     public UserController(IMapper mapper, IToDoDbContext context, IConfiguration configuration)
@@ -75,6 +76,7 @@ public class UserController : ControllerBase
     public IActionResult DeleteUser(int id, string email, string password)
     {
         DeleteUserCommand command = new DeleteUserCommand(_context);
+        command.Model = new DeleteUserModel();
         command.Model.Id = id;
         command.Model.Email = email;
         command.Model.Password = password;
