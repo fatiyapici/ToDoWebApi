@@ -2,6 +2,7 @@ using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using ToDoWebApi.Applications.UserOperations.Commands.CreateUser;
+using ToDoWebApi.Applications.UserOperations.Commands.DeleteUser;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUsers;
 using ToDoWebApi.DbOperations;
@@ -67,34 +68,16 @@ public class UserController : ControllerBase
     //     return Ok();
     // }
 
-    // [HttpDelete("{id}")]
-    // public IActionResult DeleteCustomer(int id, string email, string password)
-    // {
-    //     DeleteCustomerCommand command = new DeleteCustomerCommand(_context);
-    //     command.Model.Id = id;
-    //     command.Model.Email = email;
-    //     command.Model.Password = password;
-    //     DeleteCustomerCommandValidator validator = new DeleteCustomerCommandValidator();
-    //     validator.ValidateAndThrow(command);
-    //     command.Handle();
-    //     return Ok();
-    // }
-
-    // [HttpPost("connect/token")]
-    // public ActionResult<Token> CreateToken([FromBody] CreateTokenModel login)
-    // {
-    //     CreateTokenCommand command = new CreateTokenCommand(_context, _mapper, _configuration);
-    //     command.Model = login;
-    //     var token = command.Handle();
-    //     return token;
-    // }
-
-    // [HttpGet("refreshToken")]
-    // public ActionResult<Token> RefreshToken([FromQuery] string token)
-    // {
-    //     RefreshTokenCommand command = new RefreshTokenCommand(_context, _configuration);
-    //     command.RefreshToken = token;
-    //     var resultToken = command.Handle();
-    //     return resultToken;
-    // }
+    [HttpDelete("{id}")]
+    public IActionResult DeleteUser(int id, string email, string password)
+    {
+        DeleteUserCommand command = new DeleteUserCommand(_context);
+        command.Model.Id = id;
+        command.Model.Email = email;
+        command.Model.Password = password;
+        DeleteUserCommandValidator validator = new DeleteUserCommandValidator();
+        validator.ValidateAndThrow(command);
+        command.Handle();
+        return Ok();
+    }
 }
