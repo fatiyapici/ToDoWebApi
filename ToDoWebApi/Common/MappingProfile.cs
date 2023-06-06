@@ -1,4 +1,5 @@
 using AutoMapper;
+using ToDoWebApi.Applications.CardOperations.CreateCard;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUsers;
 using ToDoWebApi.Entity;
@@ -31,6 +32,16 @@ namespace ToDoWebApi.Common
                 .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.Surname))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password));
+
+            #region Card
+
+            //CreateCard
+            CreateMap<CreateCardViewModel, Card>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.Users.Select(id => new CardUser { UserId = id })));
+
+            #endregion
         }
     }
 }
