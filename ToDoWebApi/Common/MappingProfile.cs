@@ -1,5 +1,6 @@
 using AutoMapper;
 using ToDoWebApi.Applications.CardOperations.CreateCard;
+using ToDoWebApi.Applications.CardOperations.Queries.GetCards;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUsers;
 using ToDoWebApi.Entity;
@@ -40,6 +41,11 @@ namespace ToDoWebApi.Common
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
                 .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.Users.Select(id => new CardUser { UserId = id })));
+
+            //GetUsers
+            CreateMap<Card, CardsViewModel>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
 
             #endregion
         }
