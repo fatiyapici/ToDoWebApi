@@ -4,28 +4,30 @@ namespace ToDoWebApi.Applications.UserOperations.UpdateUser
 {
     public class UpdateUserCommand
     {
-        public const string ExceptionMessageFound = "User does not exist.";
+        public const string ExceptionMessageNotFound = "User does not exist.";
         public const string ExceptionMessageEmail = "User E-Mail is wrong.";
         public const string ExceptionMessagePassword = "User Password is wrong.";
 
-
         public UpdateUserModel Model { get; set; }
-        public int Id { get; set; }
 
         private readonly IToDoDbContext _context;
 
         public UpdateUserCommand(IToDoDbContext context, int id)
         {
             _context = context;
-            Id = id;
+            Model.Id = id;
         }
+        
         public void Handle()
         {
-            var user = _context.Users.SingleOrDefault(x => x.Id == Id);
+            var user = _context.Users.SingleOrDefault(x => x.Id == Model.Id);
+
             if (user is null)
-                throw new InvalidOperationException(ExceptionMessageFound);
+                throw new InvalidOperationException(ExceptionMessageNotFound);
+
             if (user.Email != Model.Email)
                 throw new InvalidOperationException(ExceptionMessageEmail);
+
             if (user.Password != Model.Password)
                 throw new InvalidOperationException(ExceptionMessagePassword);
 
@@ -33,8 +35,10 @@ namespace ToDoWebApi.Applications.UserOperations.UpdateUser
 
             _context.SaveChanges();
         }
+
         public class UpdateUserModel
         {
+            public int Id { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
             public string NewPassword { get; set; }
