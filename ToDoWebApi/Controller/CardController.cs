@@ -2,6 +2,7 @@ using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using ToDoWebApi.Applications.CardOperations.CreateCard;
+using ToDoWebApi.Applications.CardOperations.Queries.GetCardDetail;
 using ToDoWebApi.Applications.CardOperations.Queries.GetCards;
 using ToDoWebApi.DbOperations;
 
@@ -30,6 +31,18 @@ public class CardController : ControllerBase
         var result = query.Handle();
         return Ok(result);
     }
+
+    [HttpGet("{id}")]
+    public IActionResult GetCardDetail(int id)
+    {
+        GetCardDetailQuery query = new GetCardDetailQuery(_context, _mapper);
+        query.CardId = id;
+        GetCardDetailQueryValidator validator = new GetCardDetailQueryValidator();
+        validator.ValidateAndThrow(query);
+        var result = query.Handle();
+        return Ok(result);
+    }
+
 
     [HttpPost("newCard")]
     public IActionResult AddCard([FromBody] CreateCardViewModel newCard)
