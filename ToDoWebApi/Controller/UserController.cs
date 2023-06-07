@@ -42,7 +42,7 @@ public class UserController : ControllerBase
     public IActionResult GetUserDetail(int id)
     {
         GetUserDetailQuery query = new GetUserDetailQuery(_context, _mapper);
-        query.UserId = id;
+        query.Id = id;
         GetUserDetailQueryValidator validator = new GetUserDetailQueryValidator();
         validator.ValidateAndThrow(query);
         var result = query.Handle();
@@ -64,7 +64,7 @@ public class UserController : ControllerBase
     public IActionResult UpdateUser([FromBody] UpdateUserModel updateUser, int id)
     {
         UpdateUserCommand command = new UpdateUserCommand(_context, id);
-        command.Id = id;
+        command.Model.Id = id;
         command.Model = updateUser;
         UpdateUserCommandValidator validator = new UpdateUserCommandValidator();
         validator.ValidateAndThrow(command);

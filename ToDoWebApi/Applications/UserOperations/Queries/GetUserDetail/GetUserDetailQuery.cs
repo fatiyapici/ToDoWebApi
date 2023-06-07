@@ -8,7 +8,7 @@ namespace ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail
     {
         public const string ExceptionMessage = "User does not exist.";
         
-        public int UserId { get; set; }
+        public int Id { get; set; }
 
         private readonly IToDoDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -23,8 +23,7 @@ namespace ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail
         {
             var user = _dbContext.Users
                 .Include(uc => uc.UserCards).ThenInclude(c => c.Card)
-                .Where(user => user.Id == UserId)
-                .SingleOrDefault();
+                .SingleOrDefault(user => user.Id == Id);
 
             if (user is null)
             {
@@ -42,7 +41,6 @@ namespace ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
         public virtual List<string> UserCards { get; set; }
     }
 }

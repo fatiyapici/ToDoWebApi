@@ -21,11 +21,10 @@ namespace ToDoWebApi.Common
 
             //GetUserDetail
             CreateMap<User, UserDetailViewModel>()
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.Surname))
-            .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
-            .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.Password))
-            .ForMember(dest => dest.UserCards, opt => opt.MapFrom(src => src.UserCards.Select(x => x.Card.Name)));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.Surname))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.UserCards, opt => opt.MapFrom(src => src.UserCards.Select(x => x.Card.Name)));
 
             //CreateUser
             CreateMap<CreateUserViewModel, User>()
