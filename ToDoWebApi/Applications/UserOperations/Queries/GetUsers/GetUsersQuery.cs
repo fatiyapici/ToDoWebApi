@@ -16,8 +16,7 @@ namespace ToDoWebApi.Applications.UserOperations.Queries.GetUsers
 
         public List<UsersViewModel> Handle()
         {
-            var userList = _dbContext.Users
-            .OrderBy(x => x.Id).ToList();
+            var userList = _dbContext.Users.OrderBy(x => x.Id).ToList();
 
             List<UsersViewModel> um = _mapper.Map<List<UsersViewModel>>(userList);
             return um;
