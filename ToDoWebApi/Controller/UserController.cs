@@ -1,13 +1,17 @@
 using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using ToDoWebApi.Applications.UserOperations.Commands.CreateToken;
 using ToDoWebApi.Applications.UserOperations.Commands.CreateUser;
 using ToDoWebApi.Applications.UserOperations.Commands.DeleteUser;
+using ToDoWebApi.Applications.UserOperations.Commands.RefreshToken;
 using ToDoWebApi.Applications.UserOperations.Commands.UpdateUser;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail;
 using ToDoWebApi.Applications.UserOperations.Queries.GetUsers;
 using ToDoWebApi.Applications.UserOperations.UpdateUser;
 using ToDoWebApi.DbOperations;
+using ToDoWebApi.TokenOperations.Models;
+using static ToDoWebApi.Applications.UserOperations.Commands.CreateToken.CreateTokenCommand;
 using static ToDoWebApi.Applications.UserOperations.Commands.CreateUser.CreateUserCommand;
 using static ToDoWebApi.Applications.UserOperations.Commands.DeleteUser.DeleteUserCommand;
 using static ToDoWebApi.Applications.UserOperations.UpdateUser.UpdateUserCommand;
@@ -61,7 +65,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateUser([FromBody] UpdateUserModel updateUser, int id)
+    public IActionResult UpdateUser([FromBody] UpdateUserViewModel updateUser, int id)
     {
         UpdateUserCommand command = new UpdateUserCommand(_context, id);
         command.Model.Id = id;
@@ -85,4 +89,14 @@ public class UserController : ControllerBase
         command.Handle();
         return Ok();
     }
+
+    [HttpPost("connect/token")]
+    public ActionResult<Token> CreateToken([FromBody] CreateTokenViewModel login)
+    {
+        CreateTokenCommand command = new CreateTokenCommand(_context, _mapper, _configuration);
+        command.Model = login;
+        var token = command.Handle();
+        return token;
+    }
+
 }
