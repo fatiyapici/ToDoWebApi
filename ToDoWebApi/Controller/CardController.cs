@@ -2,12 +2,14 @@ using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using ToDoWebApi.Applications.CardOperations.Commands.DeleteCard;
+using ToDoWebApi.Applications.CardOperations.Commands.UpdateCard;
 using ToDoWebApi.Applications.CardOperations.CreateCard;
 using ToDoWebApi.Applications.CardOperations.Queries.GetCardDetail;
 using ToDoWebApi.Applications.CardOperations.Queries.GetCards;
+using ToDoWebApi.Applications.CardOperations.UpdateCard;
 using ToDoWebApi.DbOperations;
 using static ToDoWebApi.Applications.CardOperations.Commands.DeleteCard.DeleteCardCommand;
-
+using static ToDoWebApi.Applications.CardOperations.UpdateCard.UpdateCardCommand;
 namespace ToDoWebApi.Controllers;
 
 [ApiController]
@@ -52,6 +54,18 @@ public class CardController : ControllerBase
         CreateCardCommand command = new CreateCardCommand(_context, _mapper);
         command.Model = newCard;
         CreateCardCommandValidator validator = new CreateCardCommandValidator();
+        validator.ValidateAndThrow(command);
+        command.Handle();
+        return Ok();
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateCard([FromBody] UpdateCardViewModel updateCard, int id)
+    {
+        UpdateCardCommand command = new UpdateCardCommand(_context, id);
+        command.Id = id;
+        command.Model = updateCard;
+        UpdateCardCommandValidator validator = new UpdateCardCommandValidator();
         validator.ValidateAndThrow(command);
         command.Handle();
         return Ok();
