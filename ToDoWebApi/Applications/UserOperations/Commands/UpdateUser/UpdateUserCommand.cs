@@ -12,12 +12,12 @@ namespace ToDoWebApi.Applications.UserOperations.UpdateUser
 
         private readonly IToDoDbContext _context;
 
-        public UpdateUserCommand(IToDoDbContext context, int id)
+        public UpdateUserCommand(IToDoDbContext context)
         {
             _context = context;
-            Model.Id = id;
+            Model = new UpdateUserViewModel();
         }
-        
+
         public void Handle()
         {
             var user = _context.Users.SingleOrDefault(x => x.Id == Model.Id);
