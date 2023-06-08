@@ -23,21 +23,22 @@ namespace ToDoWebApi.Applications.UserOperations.Commands.CreateToken
 
         public Token Handle()
         {
-            var user = _dbContext.Users.FirstOrDefault(x => x.Email == Model.Email && x.Password == Model.Password);
-            if (user is not null)
-            {
-                TokenHandler handler = new TokenHandler(_configuration);
-                Token token = handler.CreateAccessToken(user);
+            var user = _dbContext.Users.FirstOrDefault(x =>
+                string.Equals(x.Email, Model.Email) &&
+                string.Equals(x.Password, Model.Password));
 
-                user.RefreshToken = token.RefreshToken;
-                user.RefreshTokenExpireDate = token.Expiration.AddMinutes(5);
-
-                _dbContext.SaveChanges();
-
-                return token;
-            }
-            else
+            if (user is null)
                 throw new InvalidOperationException(ExceptionMessage);
+
+            TokenHandler handler = new TokenHandler(_configuration);
+            Token token = handler.CreateAccessToken(user);
+
+            user.RefreshToken = token.RefreshToken;
+            user.RefreshTokenExpireDate = token.Expiration.AddMinutes(5);
+
+            _dbContext.SaveChanges();
+
+            return token;
         }
 
         public class CreateTokenViewModel
