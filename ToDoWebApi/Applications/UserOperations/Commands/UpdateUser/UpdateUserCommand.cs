@@ -8,7 +8,7 @@ namespace ToDoWebApi.Applications.UserOperations.UpdateUser
         public const string ExceptionMessageEmail = "User E-Mail is wrong.";
         public const string ExceptionMessagePassword = "User Password is wrong.";
 
-        public UpdateUserModel Model { get; set; }
+        public UpdateUserViewModel Model { get; set; }
 
         private readonly IToDoDbContext _context;
 
@@ -36,7 +36,7 @@ namespace ToDoWebApi.Applications.UserOperations.UpdateUser
             _context.SaveChanges();
         }
 
-        public class UpdateUserModel
+        public class UpdateUserViewModel
         {
             public int Id { get; set; }
             public string Email { get; set; }
