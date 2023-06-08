@@ -97,6 +97,8 @@ public class UserController : ControllerBase
     {
         CreateTokenCommand command = new CreateTokenCommand(_context, _mapper, _configuration);
         command.Model = login;
+        CreateTokenCommandValidator validator = new CreateTokenCommandValidator();
+        validator.ValidateAndThrow(command);
         var token = command.Handle();
         return token;
     }
