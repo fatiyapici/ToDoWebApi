@@ -9,7 +9,6 @@ namespace ToDoWebApi.Applications.CardOperations.UpdateCard
         public const string ExceptionMessageName = "Card Name is wrong.";
         public const string ExceptionMessageStatus = "Card Status is wrong.";
 
-
         public UpdateCardViewModel Model { get; set; }
         public int Id { get; set; }
 

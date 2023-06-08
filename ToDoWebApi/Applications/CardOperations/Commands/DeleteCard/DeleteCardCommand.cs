@@ -18,7 +18,6 @@ namespace ToDoWebApi.Applications.CardOperations.Commands.DeleteCard
         public void Handle()
         {
             var card = _dbContext.Cards.Find(Model.Id);
-            
             if (card is null)
                 throw new InvalidOperationException(ExceptionMessageFound);
 

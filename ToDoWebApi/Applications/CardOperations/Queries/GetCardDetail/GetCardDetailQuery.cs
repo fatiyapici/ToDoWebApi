@@ -1,7 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ToDoWebApi.DbOperations;
-using ToDoWebApi.Entity;
 
 namespace ToDoWebApi.Applications.CardOperations.Queries.GetCardDetail
 {
