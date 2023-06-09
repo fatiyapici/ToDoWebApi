@@ -68,10 +68,7 @@ public class UserController : ControllerBase
     public IActionResult UpdateUser([FromBody] UpdateUserViewModel updateUser, int id)
     {
         UpdateUserCommand command = new UpdateUserCommand(_context);
-        command.Model.Id = id;
-        command.Model.Email = updateUser.Email;
-        command.Model.Password = updateUser.Password;
-        command.Model.NewPassword = updateUser.NewPassword;
+        command.Model = updateUser;
         UpdateUserCommandValidator validator = new UpdateUserCommandValidator();
         validator.ValidateAndThrow(command);
         command.Handle();

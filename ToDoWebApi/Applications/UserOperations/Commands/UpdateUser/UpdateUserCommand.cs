@@ -15,7 +15,6 @@ namespace ToDoWebApi.Applications.UserOperations.UpdateUser
         public UpdateUserCommand(IToDoDbContext context)
         {
             _context = context;
-            Model = new UpdateUserViewModel();
         }
 
         public void Handle()
