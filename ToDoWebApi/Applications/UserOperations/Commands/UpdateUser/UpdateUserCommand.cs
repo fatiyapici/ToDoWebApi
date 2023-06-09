@@ -19,7 +19,7 @@ namespace ToDoWebApi.Applications.UserOperations.UpdateUser
 
         public void Handle()
         {
-            var user = _context.Users.SingleOrDefault(x => x.Id == Model.Id);
+            var user = _context.Users.SingleOrDefault(x => string.Equals(x.Email, Model.Email));
 
             if (user is null)
                 throw new InvalidOperationException(ExceptionMessageNotFound);
@@ -37,7 +37,6 @@ namespace ToDoWebApi.Applications.UserOperations.UpdateUser
 
         public class UpdateUserViewModel
         {
-            public int Id { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
             public string NewPassword { get; set; }

@@ -65,7 +65,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult UpdateUser([FromBody] UpdateUserViewModel updateUser, int id)
+    public IActionResult UpdateUser([FromBody] UpdateUserViewModel updateUser)
     {
         UpdateUserCommand command = new UpdateUserCommand(_context);
         command.Model = updateUser;
