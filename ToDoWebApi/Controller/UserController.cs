@@ -64,7 +64,7 @@ public class UserController : ControllerBase
         return Ok();
     }
 
-    [HttpPut("{id}")]
+    [HttpPut()]
     public IActionResult UpdateUser([FromBody] UpdateUserViewModel updateUser)
     {
         UpdateUserCommand command = new UpdateUserCommand(_context);
