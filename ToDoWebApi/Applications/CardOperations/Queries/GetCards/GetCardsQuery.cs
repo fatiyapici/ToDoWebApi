@@ -16,9 +16,7 @@ namespace ToDoWebApi.Applications.CardOperations.Queries.GetCards
 
         public List<CardsViewModel> Handle()
         {
-            var cardList = _dbContext.Cards
-            .OrderBy(x => x.Id).ToList();
-
+            var cardList = _dbContext.Cards.OrderBy(x => x.Id).ToList();
             List<CardsViewModel> cm = _mapper.Map<List<CardsViewModel>>(cardList);
             return cm;
         }

@@ -23,14 +23,15 @@ namespace ToDoWebApi.Applications.CardOperations.UpdateCard
         public void Handle()
         {
             var card = _context.Cards.SingleOrDefault(x => x.Id == Id);
+
             if (card is null)
                 throw new InvalidOperationException(ExceptionMessageFound);
 
             card.Status = Model.NewStatus;
             card.Name = Model.NewName;
 
-            if (card.Users != null)
-                card.Users.Clear();
+            if (card.UserCards != null)
+                card.UserCards.Clear();
 
             if (Model.NewUsers != null && Model.NewUsers.Any())
             {
@@ -38,16 +39,15 @@ namespace ToDoWebApi.Applications.CardOperations.UpdateCard
                 {
                     var user = _context.Users.SingleOrDefault(u => u.Email == userName);
                     if (user != null)
-                        card.Users.Add(new CardUser { User = user });
+                        card.UserCards.Add(new UserCard { User = user });
                 }
             }
             else
             {
                 var firstUser = _context.Users.FirstOrDefault();
                 if (firstUser != null)
-                    card.Users.Add(new CardUser { User = firstUser });
+                    card.UserCards.Add(new UserCard { User = firstUser });
             }
-
             _context.SaveChanges();
         }
 

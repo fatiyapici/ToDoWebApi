@@ -57,10 +57,9 @@ namespace ToDoWebApi.DBOperations
 
                 #region UserCards
 
-                context.CardUsers.AddRange(
-                    new CardUser() { CardId = 1, UserId = 1 },
-                    new CardUser() { CardId = 1, UserId = 2 },
-                    new CardUser() { CardId = 2, UserId = 2 }
+                context.UserCards.AddRange(
+                    new UserCard() { CardId = 1, UserId = 1 },
+                    new UserCard() { CardId = 2, UserId = 2 }
                 );
 
                 context.SaveChanges();

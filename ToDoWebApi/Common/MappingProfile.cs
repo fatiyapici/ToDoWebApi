@@ -41,7 +41,7 @@ namespace ToDoWebApi.Common
             CreateMap<CreateCardViewModel, Card>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.Users.Select(id => new CardUser { UserId = id })));
+                .ForMember(dest => dest.UserCards, opt => opt.MapFrom(src => src.Users.Select(id => new UserCard { UserId = id })));
 
             //GetCards
             CreateMap<Card, CardsViewModel>()
@@ -52,7 +52,7 @@ namespace ToDoWebApi.Common
             CreateMap<Card, CardDetailViewModel>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.Users.Select(x => x.User.Email)));
+                .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.UserCards.Select(x => x.User.Email)));
 
             #endregion
         }

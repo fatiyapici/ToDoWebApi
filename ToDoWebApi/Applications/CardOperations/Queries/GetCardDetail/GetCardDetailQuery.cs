@@ -22,20 +22,18 @@ namespace ToDoWebApi.Applications.CardOperations.Queries.GetCardDetail
         public CardDetailViewModel Handle()
         {
             var card = _dbContext.Cards
-                .Include(uc => uc.Users).ThenInclude(c => c.User)
+                .Include(uc => uc.UserCards).ThenInclude(c => c.User)
                 .Where(card => card.Id == CardId)
                 .SingleOrDefault();
 
             if (card is null)
-            {
                 throw new InvalidOperationException(ExceptionMessage);
-            }
 
             CardDetailViewModel cm = _mapper.Map<CardDetailViewModel>(card);
-
             return cm;
         }
     }
+
     public class CardDetailViewModel
     {
         public string Name { get; set; }

@@ -7,8 +7,6 @@ namespace ToDoWebApi.DbOperations
     {
         DbSet<Card> Cards { get; set; }
         DbSet<User> Users { get; set; }
-        DbSet<CardUser> CardUsers { get; set; }
-
         int SaveChanges();
     }
 }

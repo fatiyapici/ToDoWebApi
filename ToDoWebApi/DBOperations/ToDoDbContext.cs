@@ -9,7 +9,7 @@ namespace ToDoWebApi.DbOperations
 
         public DbSet<Card> Cards { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<CardUser> CardUsers { get; set; }
+        public DbSet<UserCard> UserCards { get; set; }
 
         public override int SaveChanges()
         {
@@ -20,16 +20,16 @@ namespace ToDoWebApi.DbOperations
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<CardUser>()
-                .HasKey(x => new { x.CardId, x.UserId });
+            modelBuilder.Entity<UserCard>()
+                .HasKey(uc => new { uc.CardId, uc.UserId });
 
-            modelBuilder.Entity<CardUser>()
-                .HasOne(x => x.Card)
-                .WithMany(x => x.Users)
-                .HasForeignKey(x => x.CardId);
+            modelBuilder.Entity<UserCard>()
+                .HasOne(c => c.Card)
+                .WithMany()
+                .HasForeignKey(ci => ci.CardId);
 
-            modelBuilder.Entity<CardUser>()
-                .HasOne(x => x.User)
+            modelBuilder.Entity<UserCard>()
+                .HasOne(u => u.User)
                 .WithMany(x => x.UserCards)
                 .HasForeignKey(x => x.UserId);
         }
