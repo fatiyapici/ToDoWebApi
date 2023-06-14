@@ -5,8 +5,7 @@ namespace ToDoWebApi.Applications.UserOperations.Commands.DeleteUser
     public class DeleteUserCommand
     {
         public const string ExceptionMessageFound = "User does not exist.";
-        public const string ExceptionMessageEmail = "User E-Mail is wrong.";
-        public const string ExceptionMessagePassword = "User Password is wrong.";
+        public const string ExceptionMessageEmailPassword = "User E-Mail is or Password wrong.";
 
         public DeleteUserModel Model { get; set; }
 
@@ -19,23 +18,13 @@ namespace ToDoWebApi.Applications.UserOperations.Commands.DeleteUser
 
         public void Handle()
         {
-            // var user = _dbContext.Users.SingleOrDefault(x => x.Id == Model.Id);
-            // if (user is null)
-            //     throw new InvalidOperationException(ExceptionMessageFound);
-            // if (user.Email != Model.Email)
-            //     throw new InvalidOperationException(ExceptionMessageEmail);
-            // if (user.Password != Model.Password)
-            //     throw new InvalidOperationException(ExceptionMessagePassword);
-            // _dbContext.Users.Remove(user);
-            // _dbContext.SaveChanges();
-
             var user = _dbContext.Users.Find(Model.Id);
             if (user is null)
                 throw new InvalidOperationException(ExceptionMessageFound);
-            if (user.Email != Model.Email)
-                throw new InvalidOperationException(ExceptionMessageEmail);
-            if (user.Password != Model.Password)
-                throw new InvalidOperationException(ExceptionMessagePassword);
+
+            if (user.Email != Model.Email || user.Password != Model.Password)
+                throw new InvalidOperationException(ExceptionMessageEmailPassword);
+
             _dbContext.Users.Remove(user);
             _dbContext.SaveChanges();
         }

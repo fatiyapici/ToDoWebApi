@@ -11,7 +11,6 @@ using ToDoWebApi.DbOperations;
 using static ToDoWebApi.Applications.UserOperations.Commands.CreateUser.CreateUserCommand;
 using static ToDoWebApi.Applications.UserOperations.Commands.DeleteUser.DeleteUserCommand;
 using static ToDoWebApi.Applications.UserOperations.UpdateUser.UpdateUserCommand;
-
 namespace ToDoWebApi.Controllers;
 
 [ApiController]
@@ -42,7 +41,8 @@ public class UserController : ControllerBase
     public IActionResult GetUserDetail(int id)
     {
         GetUserDetailQuery query = new GetUserDetailQuery(_dbContext, _mapper);
-        query.UserId = id;
+        query.Model = new UserDetailViewModel();
+        query.Model.Id = id;
         GetUserDetailQueryValidator validator = new GetUserDetailQueryValidator();
         validator.ValidateAndThrow(query);
         var result = query.Handle();

@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using ToDoWebApi.DbOperations;
 
 namespace ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail
@@ -8,7 +7,7 @@ namespace ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail
     {
         public const string ExceptionMessage = "User does not exist.";
 
-        public int UserId { get; set; }
+        public UserDetailViewModel Model { get; set; }
 
         private readonly IToDoDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -21,25 +20,21 @@ namespace ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail
 
         public UserDetailViewModel Handle()
         {
-            var user = _dbContext.Users.SingleOrDefault(x => x.Id == UserId);
-
+            var user = _dbContext.Users.SingleOrDefault(x => x.Id == Model.Id);
             if (user is null)
-            {
                 throw new InvalidOperationException(ExceptionMessage);
-            }
 
             UserDetailViewModel um = _mapper.Map<UserDetailViewModel>(user);
-
             return um;
         }
     }
 
     public class UserDetailViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public virtual List<string> Cards { get; set; }
     }
 }

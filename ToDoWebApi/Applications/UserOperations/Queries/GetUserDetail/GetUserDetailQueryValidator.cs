@@ -6,7 +6,7 @@ namespace ToDoWebApi.Applications.UserOperations.Queries.GetUserDetail
     {
         public GetUserDetailQueryValidator()
         {
-            RuleFor(command => command.UserId).GreaterThan(0);
+            RuleFor(command => command.Model.Id).GreaterThan(0);
         }
     }
 }
