@@ -11,7 +11,7 @@ namespace ToDoWebApi.Applications.CardOperations.Queries.GetCardDetail
         private readonly IToDoDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public int CardId { get; set; }
+        public CardDetailViewModel Model { get; set; }
 
         public GetCardDetailQuery(IToDoDbContext context, IMapper mapper)
         {
@@ -21,10 +21,8 @@ namespace ToDoWebApi.Applications.CardOperations.Queries.GetCardDetail
 
         public CardDetailViewModel Handle()
         {
-            var card = _dbContext.Cards
-                .Include(uc => uc.UserCards).ThenInclude(c => c.User)
-                .Where(card => card.Id == CardId)
-                .SingleOrDefault();
+            var card = _dbContext.Cards.Include(x => x.User).Where(ci => ci.Id == Model.Id)
+            .SingleOrDefault(x => x.Id == Model.Id);
 
             if (card is null)
                 throw new InvalidOperationException(ExceptionMessage);
@@ -36,8 +34,9 @@ namespace ToDoWebApi.Applications.CardOperations.Queries.GetCardDetail
 
     public class CardDetailViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }
-        public virtual List<string> Users { get; set; }
+        public string OwnerEmail { get; set; }
     }
 }

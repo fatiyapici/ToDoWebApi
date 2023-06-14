@@ -50,10 +50,10 @@ namespace ToDoWebApi.Common
 
             // GetCardDetailQuery
             CreateMap<Card, CardDetailViewModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
-                .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.UserCards.Select(x => x.User.Email)));
-
+                .ForMember(dest => dest.OwnerEmail, opt => opt.MapFrom(src => src.User.Email));
             #endregion
         }
     }

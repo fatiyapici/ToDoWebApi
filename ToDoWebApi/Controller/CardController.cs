@@ -17,21 +17,21 @@ namespace ToDoWebApi.Controllers;
 public class CardController : ControllerBase
 {
     private readonly IMapper _mapper;
-    private readonly IToDoDbContext _context;
+    private readonly IToDoDbContext _dbContext;
 
     readonly IConfiguration _configuration;
 
     public CardController(IMapper mapper, IToDoDbContext context, IConfiguration configuration)
     {
         _mapper = mapper;
-        _context = context;
+        _dbContext = context;
         _configuration = configuration;
     }
 
     [HttpGet]
     public IActionResult GetCards()
     {
-        GetCardsQuery query = new GetCardsQuery(_context, _mapper);
+        GetCardsQuery query = new GetCardsQuery(_dbContext, _mapper);
         var result = query.Handle();
         return Ok(result);
     }
@@ -39,8 +39,9 @@ public class CardController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetCardDetail(int id)
     {
-        GetCardDetailQuery query = new GetCardDetailQuery(_context, _mapper);
-        query.CardId = id;
+        GetCardDetailQuery query = new GetCardDetailQuery(_dbContext, _mapper);
+        query.Model = new CardDetailViewModel();
+        query.Model.Id = id;
         GetCardDetailQueryValidator validator = new GetCardDetailQueryValidator();
         validator.ValidateAndThrow(query);
         var result = query.Handle();
@@ -51,7 +52,7 @@ public class CardController : ControllerBase
     [HttpPost("newCard")]
     public IActionResult AddCard([FromBody] CreateCardViewModel newCard)
     {
-        CreateCardCommand command = new CreateCardCommand(_context, _mapper);
+        CreateCardCommand command = new CreateCardCommand(_dbContext, _mapper);
         command.Model = newCard;
         CreateCardCommandValidator validator = new CreateCardCommandValidator();
         validator.ValidateAndThrow(command);
@@ -62,7 +63,7 @@ public class CardController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult UpdateCard([FromBody] UpdateCardViewModel updateCard, int id)
     {
-        UpdateCardCommand command = new UpdateCardCommand(_context, id);
+        UpdateCardCommand command = new UpdateCardCommand(_dbContext, id);
         command.Id = id;
         command.Model = updateCard;
         UpdateCardCommandValidator validator = new UpdateCardCommandValidator();
@@ -74,7 +75,7 @@ public class CardController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteUser(int id)
     {
-        DeleteCardCommand command = new DeleteCardCommand(_context);
+        DeleteCardCommand command = new DeleteCardCommand(_dbContext);
         command.Model = new DeleteCardViewModel();
         command.Model.Id = id;
         DeleteCardCommandValidator validator = new DeleteCardCommandValidator();
