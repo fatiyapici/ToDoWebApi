@@ -12,16 +12,16 @@ namespace ToDoWebApi.Applications.UserOperations.UpdateUser
         public UpdateUserModel Model { get; set; }
         public int Id { get; set; }
 
-        private readonly IToDoDbContext _context;
+        private readonly IToDoDbContext _dbContext;
 
         public UpdateUserCommand(IToDoDbContext context, int id)
         {
-            _context = context;
+            _dbContext = context;
             Id = id;
         }
         public void Handle()
         {
-            var user = _context.Users.SingleOrDefault(x => x.Id == Id);
+            var user = _dbContext.Users.SingleOrDefault(x => x.Id == Id);
             if (user is null)
                 throw new InvalidOperationException(ExceptionMessageFound);
             if (user.Email != Model.Email)
@@ -31,7 +31,7 @@ namespace ToDoWebApi.Applications.UserOperations.UpdateUser
 
             user.Password = Model.NewPassword;
 
-            _context.SaveChanges();
+            _dbContext.SaveChanges();
         }
         public class UpdateUserModel
         {

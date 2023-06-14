@@ -19,21 +19,21 @@ namespace ToDoWebApi.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IMapper _mapper;
-    private readonly IToDoDbContext _context;
+    private readonly IToDoDbContext _dbContext;
 
     readonly IConfiguration _configuration;
 
     public UserController(IMapper mapper, IToDoDbContext context, IConfiguration configuration)
     {
         _mapper = mapper;
-        _context = context;
+        _dbContext = context;
         _configuration = configuration;
     }
 
     [HttpGet]
     public IActionResult GetUsers()
     {
-        GetUsersQuery query = new GetUsersQuery(_context, _mapper);
+        GetUsersQuery query = new GetUsersQuery(_dbContext, _mapper);
         var result = query.Handle();
         return Ok(result);
     }
@@ -41,7 +41,7 @@ public class UserController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult GetUserDetail(int id)
     {
-        GetUserDetailQuery query = new GetUserDetailQuery(_context, _mapper);
+        GetUserDetailQuery query = new GetUserDetailQuery(_dbContext, _mapper);
         query.UserId = id;
         GetUserDetailQueryValidator validator = new GetUserDetailQueryValidator();
         validator.ValidateAndThrow(query);
@@ -52,7 +52,7 @@ public class UserController : ControllerBase
     [HttpPost("newUser")]
     public IActionResult AddUser([FromBody] CreateUserViewModel newUser)
     {
-        CreateUserCommand command = new CreateUserCommand(_context, _mapper);
+        CreateUserCommand command = new CreateUserCommand(_dbContext, _mapper);
         command.Model = newUser;
         CreateUserCommandValidator validator = new CreateUserCommandValidator();
         validator.ValidateAndThrow(command);
@@ -63,7 +63,7 @@ public class UserController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult UpdateUser([FromBody] UpdateUserModel updateUser, int id)
     {
-        UpdateUserCommand command = new UpdateUserCommand(_context, id);
+        UpdateUserCommand command = new UpdateUserCommand(_dbContext, id);
         command.Id = id;
         command.Model = updateUser;
         UpdateUserCommandValidator validator = new UpdateUserCommandValidator();
@@ -75,7 +75,7 @@ public class UserController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult DeleteUser(int id, string email, string password)
     {
-        DeleteUserCommand command = new DeleteUserCommand(_context);
+        DeleteUserCommand command = new DeleteUserCommand(_dbContext);
         command.Model = new DeleteUserModel();
         command.Model.Id = id;
         command.Model.Email = email;
