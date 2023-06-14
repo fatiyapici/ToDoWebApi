@@ -6,8 +6,6 @@ namespace ToDoWebApi.Applications.CardOperations.UpdateCard
     public class UpdateCardCommand
     {
         public const string ExceptionMessageFound = "Card does not exist.";
-        // public const string ExceptionMessageName = "Card Name is wrong.";
-        // public const string ExceptionMessageStatus = "Card Status is wrong.";
 
         public UpdateCardViewModel Model { get; set; }
         public int Id { get; set; }
