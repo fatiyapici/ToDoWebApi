@@ -42,25 +42,18 @@ namespace ToDoWebApi.DBOperations
                 context.Cards.AddRange(
                    new Card
                    {
+                       Id = 1,
+                       UserId = 1,
                        Name = "Shopping",
                        Status = Status.ToDo
                    },
                    new Card
                    {
+                       Id = 2,
+                       UserId = 2,
                        Name = "Meeting",
                        Status = Status.Done
                    });
-
-                context.SaveChanges();
-
-                #endregion
-
-                #region UserCards
-
-                context.UserCards.AddRange(
-                    new UserCard() { CardId = 1, UserId = 1 },
-                    new UserCard() { CardId = 2, UserId = 2 }
-                );
 
                 context.SaveChanges();
 
