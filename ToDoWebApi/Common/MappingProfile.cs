@@ -54,7 +54,8 @@ namespace ToDoWebApi.Common
             //CreateCard
             CreateMap<CreateCardViewModel, Card>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId));
 
             #endregion
         }

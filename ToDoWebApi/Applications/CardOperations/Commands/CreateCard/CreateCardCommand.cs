@@ -36,6 +36,6 @@ namespace ToDoWebApi.Applications.CardOperations.CreateCard
     {
         public string Name { get; set; }
         public Status Status { get; set; }
-        public List<int> Users { get; set; }
+        public int UserId { get; set; }
     }
 }
