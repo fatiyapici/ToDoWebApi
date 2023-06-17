@@ -6,6 +6,7 @@ using ToDoWebApi.Applications.CardOperations.Commands.UpdateCard;
 using ToDoWebApi.Applications.CardOperations.CreateCard;
 using ToDoWebApi.Applications.CardOperations.Queries.GetCardDetail;
 using ToDoWebApi.Applications.CardOperations.Queries.GetCards;
+using ToDoWebApi.Applications.CardOperations.Queries.GetCardsByUser;
 using ToDoWebApi.Applications.CardOperations.UpdateCard;
 using ToDoWebApi.DbOperations;
 using static ToDoWebApi.Applications.CardOperations.Commands.DeleteCard.DeleteCardCommand;
@@ -43,6 +44,18 @@ public class CardController : ControllerBase
         query.Model = new CardDetailViewModel();
         query.Model.Id = id;
         GetCardDetailQueryValidator validator = new GetCardDetailQueryValidator();
+        validator.ValidateAndThrow(query);
+        var result = query.Handle();
+        return Ok(result);
+    }
+
+    [HttpGet("user/{userId}")]
+    public IActionResult GetCardsDetailsByUser(int userId)
+    {
+        GetCardsByUserQuery query = new GetCardsByUserQuery(_dbContext, _mapper);
+        query.Model = new CardsDetailsModel();
+        query.Model.UserId = userId;
+        GetCardsByUserQueryValidator validator = new GetCardsByUserQueryValidator();
         validator.ValidateAndThrow(query);
         var result = query.Handle();
         return Ok(result);
