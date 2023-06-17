@@ -14,7 +14,6 @@ namespace ToDoWebApi.DBOperations
                 {
                     return;
                 }
-
                 #region Users
 
                 context.Users.AddRange(
