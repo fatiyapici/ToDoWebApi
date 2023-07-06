@@ -41,14 +41,12 @@ namespace ToDoWebApi.DBOperations
                 context.Cards.AddRange(
                    new Card
                    {
-                       Id = 1,
                        UserId = 1,
                        Name = "Shopping",
                        Status = Status.ToDo
                    },
                    new Card
                    {
-                       Id = 2,
                        UserId = 2,
                        Name = "Meeting",
                        Status = Status.Done
