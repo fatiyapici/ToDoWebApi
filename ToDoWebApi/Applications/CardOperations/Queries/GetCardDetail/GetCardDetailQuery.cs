@@ -22,7 +22,7 @@ namespace ToDoWebApi.Applications.CardOperations.Queries.GetCardDetail
         public CardDetailViewModel Handle()
         {
             var card = _dbContext.Cards.Include(x => x.User).Where(ci => ci.Id == Model.Id)
-            .SingleOrDefault(x => x.Id == Model.Id);
+                .SingleOrDefault(x => x.Id == Model.Id);
 
             if (card is null)
                 throw new InvalidOperationException(ExceptionMessage);
