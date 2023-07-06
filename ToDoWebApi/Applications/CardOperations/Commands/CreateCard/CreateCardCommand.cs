@@ -21,7 +21,7 @@ namespace ToDoWebApi.Applications.CardOperations.CreateCard
 
         public void Handle()
         {
-            var card = _dbContext.Cards.SingleOrDefault(x => x.Name == Model.Name && x.Status == Model.Status);
+            var card = _dbContext.Cards.SingleOrDefault(x => x.Name.Equals(Model.Name) && x.Status.Equals(Model.Status));
             if (card != null)
                 throw new InvalidOperationException(ExceptionMessage);
 
@@ -34,8 +34,8 @@ namespace ToDoWebApi.Applications.CardOperations.CreateCard
 
     public class CreateCardViewModel
     {
+        public int UserId { get; set; }
         public string Name { get; set; }
         public Status Status { get; set; }
-        public int UserId { get; set; }
     }
 }

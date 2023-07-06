@@ -6,6 +6,7 @@ namespace ToDoWebApi.Applications.CardOperations.CreateCard
     {
         public CreateCardCommandValidator()
         {
+            RuleFor(command => command.Model.UserId).NotEmpty();
             RuleFor(command => command.Model.Name).NotEmpty();
             RuleFor(command => command.Model.Status).NotEmpty();
         }
