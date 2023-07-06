@@ -6,7 +6,7 @@ namespace ToDoWebApi.Applications.CardOperations.Commands.DeleteCard
     {
         public DeleteCardCommandValidator()
         {
-            RuleFor(command => command.Model.Id).GreaterThan(0);
+            RuleFor(command => command.CardId).GreaterThan(0);
         }
     }
 }

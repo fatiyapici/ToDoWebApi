@@ -6,9 +6,9 @@ namespace ToDoWebApi.Applications.CardOperations.Commands.DeleteCard
     {
         public const string ExceptionMessageFound = "Card does not exist.";
 
-        public DeleteCardViewModel Model { get; set; }
-
         private readonly IToDoDbContext _dbContext;
+
+        public int CardId { get; set; }
 
         public DeleteCardCommand(IToDoDbContext dbContext)
         {
@@ -17,17 +17,12 @@ namespace ToDoWebApi.Applications.CardOperations.Commands.DeleteCard
 
         public void Handle()
         {
-            var card = _dbContext.Cards.Find(Model.Id);
+            var card = _dbContext.Cards.Find(CardId);
             if (card is null)
                 throw new InvalidOperationException(ExceptionMessageFound);
 
             _dbContext.Cards.Remove(card);
             _dbContext.SaveChanges();
-        }
-
-        public class DeleteCardViewModel
-        {
-            public int Id { get; set; }
         }
     }
 }

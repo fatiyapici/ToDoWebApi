@@ -89,8 +89,7 @@ public class CardController : ControllerBase
     public IActionResult DeleteUser(int id)
     {
         DeleteCardCommand command = new DeleteCardCommand(_dbContext);
-        command.Model = new DeleteCardViewModel();
-        command.Model.Id = id;
+        command.CardId = id;
         DeleteCardCommandValidator validator = new DeleteCardCommandValidator();
         validator.ValidateAndThrow(command);
         command.Handle();
