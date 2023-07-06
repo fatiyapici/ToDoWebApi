@@ -24,9 +24,9 @@ namespace ToDoWebApi.Applications.UserOperations.UpdateUser
             var user = _dbContext.Users.SingleOrDefault(x => x.Id == Id);
             if (user is null)
                 throw new InvalidOperationException(ExceptionMessageFound);
-            if (user.Email != Model.Email)
+            if (!user.Email.Equals(Model.Email))
                 throw new InvalidOperationException(ExceptionMessageEmail);
-            if (user.Password != Model.Password)
+            if (!user.Password.Equals(Model.Password))
                 throw new InvalidOperationException(ExceptionMessagePassword);
 
             user.Password = Model.NewPassword;
