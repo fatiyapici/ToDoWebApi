@@ -22,7 +22,7 @@ namespace ToDoWebApi.Applications.UserOperations.Commands.DeleteUser
             if (user is null)
                 throw new InvalidOperationException(ExceptionMessageFound);
 
-            if (user.Email != Model.Email || user.Password != Model.Password)
+            if (!user.Email.Equals(Model.Email)|| !user.Password.Equals(Model.Password))
                 throw new InvalidOperationException(ExceptionMessageEmailPassword);
 
             _dbContext.Users.Remove(user);
