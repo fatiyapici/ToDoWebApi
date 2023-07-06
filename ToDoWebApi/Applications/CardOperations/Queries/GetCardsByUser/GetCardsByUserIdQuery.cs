@@ -10,7 +10,7 @@ namespace ToDoWebApi.Applications.CardOperations.Queries.GetCardsByUser
         private readonly IToDoDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public CardsDetailsModel Model { get; set; }
+        public int UserId { get; set; }
 
         public GetCardsByUserQuery(IToDoDbContext context, IMapper mapper)
         {
@@ -20,7 +20,7 @@ namespace ToDoWebApi.Applications.CardOperations.Queries.GetCardsByUser
 
         public List<CardsDetailsViewModel> Handle()
         {
-            var cardList = _dbContext.Cards.Where(x => x.UserId == Model.UserId).ToList();
+            var cardList = _dbContext.Cards.Where(x => x.UserId == UserId).ToList();
             List<CardsDetailsViewModel> cm = _mapper.Map<List<CardsDetailsViewModel>>(cardList);
             return cm;
         }
@@ -31,9 +31,5 @@ namespace ToDoWebApi.Applications.CardOperations.Queries.GetCardsByUser
         public int Id { get; set; }
         public string Name { get; set; }
         public string Status { get; set; }
-    }
-    public class CardsDetailsModel
-    {
-        public int UserId { get; set; }
     }
 }

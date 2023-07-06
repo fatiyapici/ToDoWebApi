@@ -53,8 +53,7 @@ public class CardController : ControllerBase
     public IActionResult GetCardsDetailsByUser(int userId)
     {
         GetCardsByUserQuery query = new GetCardsByUserQuery(_dbContext, _mapper);
-        query.Model = new CardsDetailsModel();
-        query.Model.UserId = userId;
+        query.UserId = userId;
         GetCardsByUserQueryValidator validator = new GetCardsByUserQueryValidator();
         validator.ValidateAndThrow(query);
         var result = query.Handle();

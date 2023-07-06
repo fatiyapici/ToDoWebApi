@@ -6,7 +6,7 @@ namespace ToDoWebApi.Applications.CardOperations.Queries.GetCardsByUser
     {
         public GetCardsByUserQueryValidator()
         {
-            RuleFor(query => query.Model.UserId).GreaterThan(0);
+            RuleFor(query => query.UserId).GreaterThan(0);
         }
     }
 }
